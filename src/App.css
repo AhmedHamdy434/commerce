@@ -1,0 +1,39 @@
+.landing-image {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  min-width: 1800px;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(12, 39, 39);
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.landing-section {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+}
+.hero-image {
+  img {
+    width: 100%;
+    max-width: 800px;
+  }
+}
+.card-image:hover .card-name {
+  transform: translateY(0);
+}
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--main);
+  margin-left: 6px;
+}
