@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import GoogleButton from "../components/log/GoogleButton";
 
 export default function SignIn() {
   const authContext = useAuth();
@@ -79,7 +80,7 @@ export default function SignIn() {
             {pending ? "Signing ..." : "Sign In"}
           </Button>
         </form>
-
+        <GoogleButton setError={setError} />
         <Button href="/signup" variant="text" sx={{ marginBlock: "16px" }}>
           Create a new account
         </Button>

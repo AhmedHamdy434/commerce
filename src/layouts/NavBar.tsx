@@ -1,4 +1,3 @@
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,12 +14,18 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../providers/AuthProvider";
 import { logout } from "../firebase/auth";
-import { useDispatch } from "react-redux";
-import { empty } from "../redux/cart/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { CartAccountType, empty } from "../redux/cart/cartSlice";
+import { RootState } from "../redux/store";
+import { useState, MouseEvent } from "react";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Badge from "@mui/material/Badge";
+import { updatingFirebaseStore } from "../firebase/actions";
 
 function ResponsiveAppBar() {
   const authContext = useAuth();
   const user = authContext?.user;
+
   const pages = [
     {
       title: "Products",
@@ -33,27 +38,17 @@ function ResponsiveAppBar() {
   ];
   const settings = [`${user?.email}`, "Logout"];
   const navigate = useNavigate();
-  // const allCartProducts: CartAccountType = useSelector(
-  //   (state: RootState) => state.cart
-  // );
+  const allCartProducts: CartAccountType = useSelector(
+    (state: RootState) => state.cart
+  );
   const dispatch = useDispatch();
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [isMounted, setIsMounted] = React.useState(false);
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-  React.useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  if (!isMounted) return null;
-
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -64,6 +59,10 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const handleNavigate = async (page: string) => {
+    if (user) await updatingFirebaseStore(user.uid, allCartProducts);
+    navigate(page);
+  };
   const logOutFunction = async () => {
     await logout();
     dispatch(empty());
@@ -71,7 +70,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar style={{ minHeight: "70px" }} position="sticky">
+    <AppBar sx={{ backgroundColor: "var(--main)" }} position="sticky">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -123,9 +122,12 @@ function ResponsiveAppBar() {
               {pages.map((page) => (
                 <MenuItem key={page.title} onClick={handleCloseNavMenu}>
                   <Button
-                    onClick={() => navigate(page.to)}
-                    color="inherit"
-                    sx={{ minWidth: "150px" }}
+                    onClick={() => handleNavigate(page.to)}
+                    sx={{
+                      color: "var(--text)",
+                      minWidth: "150px",
+                      backgroundColor: "var(--main1)",
+                    }}
                   >
                     {page.title}
                   </Button>
@@ -156,8 +158,10 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page.title}
-                href={page.to}
-                onClick={handleCloseNavMenu}
+                onClick={() => {
+                  handleCloseNavMenu();
+                  handleNavigate(page.to);
+                }}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page.title}
@@ -165,7 +169,27 @@ function ResponsiveAppBar() {
             ))}
           </Box>
           {user ? (
-            <Box sx={{ flexGrow: 0 }}>
+            <Box
+              sx={{
+                flexGrow: 0,
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <IconButton>
+                <Badge
+                  badgeContent={allCartProducts.totalCount}
+                  overlap="circular"
+                  color="success"
+                >
+                  <ShoppingCartIcon
+                    fontSize="large"
+                    color="action"
+                    sx={{ color: "var(--text)" }}
+                  />
+                </Badge>
+              </IconButton>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt={user?.email || "user"} src="/react.svg" />

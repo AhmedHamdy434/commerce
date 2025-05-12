@@ -4,14 +4,20 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --main: #133926;
+  --main1: #204d36;
+  --background: #242424;
+  --background1: #242424;
+  --background2: #242424;
+  --text: rgba(255, 255, 255, 0.87);
+  --text1: #cdc;
+  color: var(--text);
+  background-color: var(--background);
 }
 
 body {
@@ -19,14 +25,14 @@ body {
   min-height: 100vh;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-}
 a {
   text-decoration: none;
+}
+input {
+  padding: 10px 6px;
+  border: none;
+  font-size: 16px;
+  margin-bottom: 14px;
 }
 input:focus {
   outline: none;

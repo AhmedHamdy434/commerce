@@ -5,8 +5,12 @@ import { useState } from "react";
 import NumberToAddToCart from "./NumberToAddToCart";
 import AddToCart from "./AddToCart";
 import CardImage from "./CardImage";
+import { useAuth } from "../../providers/AuthProvider";
 
 const CardComponent = ({ product }: { product: ProductType }) => {
+  const authContext = useAuth();
+  const user = authContext?.user;
+
   const [numberToCart, setNumberToCart] = useState<number>(0);
 
   return (
@@ -21,13 +25,17 @@ const CardComponent = ({ product }: { product: ProductType }) => {
     >
       <CardImage product={product} />
 
-      <NumberToAddToCart
-        numberToCart={numberToCart}
-        decreaseFunction={() => setNumberToCart(numberToCart - 1)}
-        increseFunctuon={() => setNumberToCart(numberToCart + 1)}
-        price={product.price}
-      />
-      <AddToCart product={product} numberToCart={numberToCart} />
+      {user && (
+        <>
+          <NumberToAddToCart
+            numberToCart={numberToCart}
+            decreaseFunction={() => setNumberToCart(numberToCart - 1)}
+            increseFunctuon={() => setNumberToCart(numberToCart + 1)}
+            price={product.price}
+          />
+          <AddToCart product={product} numberToCart={numberToCart} />
+        </>
+      )}
     </Card>
   );
 };

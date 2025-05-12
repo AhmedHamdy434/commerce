@@ -1,9 +1,10 @@
 import Container from "@mui/material/Container";
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import { fetchData, mainUrl, ProductType } from "../fetchData";
 import CardComponent from "../components/cardComponent/CardComponent";
+import Loading from "../components/Loading";
+import Typography from "@mui/material/Typography";
 
 const Products = () => {
   const [allProducts, setAllProducts] = useState<ProductType[]>([]);
@@ -16,24 +17,29 @@ const Products = () => {
     };
     fetchFunction();
   }, []);
-  if (isLoading)
-    return (
-      <Box
-        sx={{ minHeight: "100vh", paddingTop: "300px", textAlign: "center" }}
-      >
-        <Typography variant="h3" component="h3" sx={{ marginBottom: "50px" }}>
-          Loading...
-        </Typography>
-      </Box>
-    );
+
   return (
-    <>
-      <Container fixed sx={{ minHeight: "100vh" }}>
-        <h2>Explore all products</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit id ex
-          possimus consequuntur velit sin
-        </p>
+    <Container fixed sx={{ minHeight: "100vh" }}>
+      <Typography variant="h4" sx={{ marginTop: "50px" }}>
+        Discover the perfect products for every style and need.
+      </Typography>
+      <p
+        style={{
+          color: "var(--text1)",
+          letterSpacing: "1px",
+          lineHeight: "2",
+        }}
+      >
+        Explore our wide selection of men's and women's clothing, high-quality
+        electronics, and stunning jewelry.
+        <br />
+        Whether you're looking for the latest fashion trends, powerful gadgets,
+        or elegant accessories, we have something for everyone. Shop with
+        confidence and elevate your lifestyle today.
+      </p>
+      {isLoading ? (
+        <Loading />
+      ) : (
         <Box
           className="cards"
           sx={{
@@ -46,8 +52,8 @@ const Products = () => {
             <CardComponent key={product.id} product={product} />
           ))}
         </Box>
-      </Container>
-    </>
+      )}
+    </Container>
   );
 };
 

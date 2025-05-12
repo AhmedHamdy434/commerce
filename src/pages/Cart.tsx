@@ -23,10 +23,11 @@ const CartPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
-      updatingFirebaseStore(user.uid, allCartProducts);
-      setIsMounted(true);
-    }
+    const initialFunction = async () => {
+      if (user) await updatingFirebaseStore(user.uid, allCartProducts);
+    };
+    initialFunction();
+    setIsMounted(true);
   }, [allCartProducts, user]);
   if (!isMounted) return;
   if (!user) return <NoUserInCart />;
@@ -41,11 +42,15 @@ const CartPage = () => {
       ))}
       <Button
         variant="contained"
-        sx={{ width: "100%" }}
+        sx={{ width: "100%", backgroundColor: "var(--main)" }}
         onClick={() => navigate("/checkout")}
       >
         Proceed to checkout ({allCartProducts.totalCount} items)
-        {allCartProducts.totalPrice} $
+        <Typography
+          sx={{ fontSize: "18px", fontWeight: "bold", marginLeft: "8px" }}
+        >
+          {allCartProducts.totalPrice.toFixed(2)} $
+        </Typography>
       </Button>
     </Container>
   );

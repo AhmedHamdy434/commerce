@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../providers/AuthProvider";
 import { adding, CartProducts } from "../../redux/cart/cartSlice";
 import { useDispatch } from "react-redux";
 import CardActions from "@mui/material/CardActions";
@@ -15,15 +14,13 @@ const AddToCart = ({
   numberToCart: number;
 }) => {
   const navigate = useNavigate();
-  const authContext = useAuth();
-  const user = authContext?.user;
 
   const dispatch = useDispatch();
 
   const [isAddedToCart, setIsAddedToCart] = useState(false);
 
   const handleAddToCart = () => {
-    if (numberToCart > 0 && user) {
+    if (numberToCart > 0) {
       const addedProduct: CartProducts = {
         id: product.id,
         category: product.category,

@@ -27,7 +27,7 @@ const NumberToAddToCart = ({
       <Box
         sx={{
           display: "flex",
-          width: "50%",
+          width: "40%",
           border: "1px solid #444",
           borderRadius: "10px",
           padding: "6px",

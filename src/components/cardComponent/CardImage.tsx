@@ -37,11 +37,18 @@ const CardImage = ({ product }: { product: ProductType }) => {
           justifyContent: "space-between",
         }}
       >
-        <Typography variant="subtitle2">
-          price:- <span className="price"> {price} $</span>
+        <Typography variant="body1">
+          price:-{" "}
+          <span style={{ marginLeft: "6px" }} className="price">
+            {" "}
+            {price} $
+          </span>
         </Typography>
-        <Typography variant="subtitle2" component="h4" sx={{}}>
-          category :- {category}
+        <Typography variant="body1">
+          category :-
+          <span style={{ marginLeft: "6px", color: "var(--main)" }}>
+            {category}
+          </span>
         </Typography>
       </CardContent>
     </Box>

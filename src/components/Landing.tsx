@@ -5,13 +5,25 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { User } from "firebase/auth";
+import { useAuth } from "../providers/AuthProvider";
 const Landing = () => {
   const navigate = useNavigate();
+  const authContext = useAuth();
+  const [currentUser, setCurrentUser] = useState<User | null | undefined>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    const user = authContext?.user;
+    setCurrentUser(user);
+    setIsMounted(true);
+  }, [authContext?.user]);
 
   return (
     <main
       style={{
-        height: "calc(100vh - 70px)",
+        minHeight: "calc(100vh - 68px)",
         overflow: "hidden",
         position: "relative",
       }}
@@ -23,7 +35,7 @@ const Landing = () => {
         loading="lazy"
       />
       <div className="overlay"></div>
-      <Container fixed sx={{ height: "100%" }}>
+      <Container fixed sx={{ height: "100%", maxHeight: "1500px" }}>
         <Box
           sx={{
             display: "grid",
@@ -53,17 +65,19 @@ const Landing = () => {
               component="h1"
               sx={{ color: "var(--main)", marginBottom: "12px" }}
             >
-              Style It Your Way
+              Style. Power. Elegance.
             </Typography>
             <Typography
               variant="subtitle1"
               component="p"
-              sx={{ lineHeight: "2", letterSpacing: "2px" }}
+              sx={{
+                lineHeight: "2",
+                letterSpacing: "1px",
+                color: "var(--text1)",
+              }}
             >
-              Discover the latest fashion trends right here! From casual to
-              classy, we've got outfits for every mood.Pick your favourites and
-              get them delivered straight to your door. Stay unique, stay
-              stylish!
+              Find your perfect look, tech essentials, and timeless jewelry -
+              all in one place.
             </Typography>
           </Box>
           <Box
@@ -76,14 +90,17 @@ const Landing = () => {
               gridArea: "buttons",
             }}
           >
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "var(--main)",
-              }}
-            >
-              Sign in
-            </Button>
+            {isMounted && !currentUser && (
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "var(--main)",
+                }}
+                onClick={() => navigate("/signin")}
+              >
+                Sign in
+              </Button>
+            )}
             <Button
               variant="contained"
               sx={{
