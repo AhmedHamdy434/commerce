@@ -44,12 +44,16 @@ function ResponsiveAppBar() {
   const dispatch = useDispatch();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const [anchorElCart, setAnchorElCart] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
+  };
+  const handleOpenCartMenu = (event: MouseEvent<HTMLElement>) => {
+    setAnchorElCart(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
@@ -58,6 +62,9 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+  const handleCloseCartMenu = () => {
+    setAnchorElCart(null);
   };
   const handleNavigate = async (page: string) => {
     if (user) await updatingFirebaseStore(user.uid, allCartProducts);
@@ -78,7 +85,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            onClick={() => navigate("/")}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -117,16 +124,21 @@ function ResponsiveAppBar() {
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{ display: { xs: "block", md: "none" } }}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+                <MenuItem
+                  key={page.title}
+                  onClick={handleCloseNavMenu}
+                  sx={{ backgroundColor: "var(--main1)" }}
+                >
                   <Button
                     onClick={() => handleNavigate(page.to)}
                     sx={{
                       color: "var(--text)",
                       minWidth: "150px",
-                      backgroundColor: "var(--main1)",
                     }}
                   >
                     {page.title}
@@ -140,7 +152,7 @@ function ResponsiveAppBar() {
             variant="h5"
             noWrap
             component="a"
-            href="/"
+            onClick={() => navigate("/")}
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -177,19 +189,65 @@ function ResponsiveAppBar() {
                 gap: "10px",
               }}
             >
-              <IconButton>
-                <Badge
-                  badgeContent={allCartProducts.totalCount}
-                  overlap="circular"
-                  color="success"
+              <Box sx={{ display: "flex" }}>
+                <IconButton
+                  aria-label="current Cart List"
+                  aria-controls="menu-cart"
+                  aria-haspopup="true"
+                  onClick={handleOpenCartMenu}
                 >
-                  <ShoppingCartIcon
-                    fontSize="large"
-                    color="action"
-                    sx={{ color: "var(--text)" }}
-                  />
-                </Badge>
-              </IconButton>
+                  <Badge
+                    badgeContent={allCartProducts.totalCount}
+                    overlap="circular"
+                    color="success"
+                  >
+                    <ShoppingCartIcon
+                      fontSize="large"
+                      color="action"
+                      sx={{ color: "var(--text)" }}
+                    />
+                  </Badge>
+                </IconButton>
+                <Menu
+                  id="menu-cart"
+                  anchorEl={anchorElCart}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  open={Boolean(anchorElCart)}
+                  onClose={handleCloseCartMenu}
+                  // sx={{
+                  //   display: { xs: "block", md: "none" },
+                  // }}
+                >
+                  {allCartProducts.products.map((product) => (
+                    <MenuItem
+                      key={product.id}
+                      onClick={handleCloseCartMenu}
+                      sx={{ backgroundColor: "var(--main1)" }}
+                    >
+                      <Typography
+                        component="a"
+                        onClick={() => handleNavigate(`/product/${product.id}`)}
+                        sx={{
+                          color: "var(--text)",
+                          width: "150px",
+                          textOverflow: "ellipsis !important",
+                        }}
+                      >
+                        {product.title}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt={user?.email || "user"} src="/react.svg" />
@@ -212,7 +270,14 @@ function ResponsiveAppBar() {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <MenuItem
+                    key={setting}
+                    onClick={handleCloseUserMenu}
+                    sx={{
+                      backgroundColor: "var(--main1)",
+                      color: "var(--text)",
+                    }}
+                  >
                     <Typography
                       component="a"
                       onClick={() => {
@@ -229,6 +294,7 @@ function ResponsiveAppBar() {
           ) : (
             <Button
               variant="contained"
+              sx={{ backgroundColor: "var(--main)" }}
               onClick={() => {
                 navigate("/signin");
               }}
