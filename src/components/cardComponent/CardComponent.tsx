@@ -17,7 +17,7 @@ const CardComponent = ({ product }: { product: ProductType }) => {
     <Card
       className="card-image"
       sx={{
-        backgroundColor: "#555",
+        backgroundColor: "var(--background1)",
         borderRadius: "10px",
         color: "white",
         paddingBottom: "14px",

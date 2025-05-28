@@ -19,15 +19,20 @@ const Products = () => {
   }, []);
 
   return (
-    <Container fixed sx={{ minHeight: "100vh" }}>
-      <Typography variant="h4" sx={{ marginTop: "50px" }}>
+    <Container fixed sx={{ minHeight: "100vh", paddingTop: "68px" }}>
+      <Typography
+        variant="h4"
+        sx={{
+          marginTop: { xs: "20px", sm: "50px" },
+          fontSize: { xs: "22px", md: "34px" },
+        }}
+      >
         Discover the perfect products for every style and need.
       </Typography>
       <p
         style={{
           color: "var(--text1)",
           letterSpacing: "1px",
-          lineHeight: "2",
         }}
       >
         Explore our wide selection of men's and women's clothing, high-quality
@@ -46,6 +51,7 @@ const Products = () => {
             display: "grid",
             gap: "20px",
             gridTemplateColumns: "repeat(auto-fill , minmax(300px , 1fr))",
+            paddingBottom: "50px",
           }}
         >
           {allProducts.map((product) => (

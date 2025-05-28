@@ -3,12 +3,13 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { ProductType } from "../../fetchData";
+import { Link } from "react-router-dom";
 
 const CardImage = ({ product }: { product: ProductType }) => {
-  const { category, image, price, title } = product;
+  const { category, id, image, price, title } = product;
 
   return (
-    <Box sx={{ cursor: "pointer" }}>
+    <Link to={`/products/${id}`} style={{ color: "var(--text)" }}>
       <Box sx={{ overflow: "hidden", position: "relative" }}>
         <CardMedia component="img" image={image} alt={title} height={300} />
         <Box
@@ -37,21 +38,20 @@ const CardImage = ({ product }: { product: ProductType }) => {
           justifyContent: "space-between",
         }}
       >
-        <Typography variant="body1">
-          price:-{" "}
+        <Typography variant="body2">
+          price:-
           <span style={{ marginLeft: "6px" }} className="price">
-            {" "}
             {price} $
           </span>
         </Typography>
-        <Typography variant="body1">
+        <Typography variant="body2">
           category :-
           <span style={{ marginLeft: "6px", color: "var(--main)" }}>
             {category}
           </span>
         </Typography>
       </CardContent>
-    </Box>
+    </Link>
   );
 };
 

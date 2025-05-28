@@ -14,7 +14,6 @@ const AddToCart = ({
   numberToCart: number;
 }) => {
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   const [isAddedToCart, setIsAddedToCart] = useState(false);

@@ -12,7 +12,7 @@ const CartComponent = ({ cartProduct }: { cartProduct: CartProducts }) => {
   return (
     <Card
       sx={{
-        backgroundColor: "#555",
+        backgroundColor: "var(--background1)",
         borderRadius: "10px",
         color: "white",
         padding: "14px",

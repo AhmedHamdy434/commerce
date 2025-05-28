@@ -41,11 +41,12 @@ export default function SignUp() {
         justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
+        paddingTop: "68px",
       }}
     >
       <Box
         sx={{
-          backgroundColor: "#222",
+          backgroundColor: "var(--background1)",
           padding: "32px",
           borderRadius: "10px",
         }}

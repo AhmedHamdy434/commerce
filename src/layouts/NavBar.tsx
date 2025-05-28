@@ -77,7 +77,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar sx={{ backgroundColor: "var(--main)" }} position="sticky">
+    <AppBar sx={{ backgroundColor: "var(--main)" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -131,6 +131,7 @@ function ResponsiveAppBar() {
               {pages.map((page) => (
                 <MenuItem
                   key={page.title}
+                  className="scaling"
                   onClick={handleCloseNavMenu}
                   sx={{ backgroundColor: "var(--main1)" }}
                 >
@@ -208,46 +209,66 @@ function ResponsiveAppBar() {
                     />
                   </Badge>
                 </IconButton>
-                <Menu
-                  id="menu-cart"
-                  anchorEl={anchorElCart}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  open={Boolean(anchorElCart)}
-                  onClose={handleCloseCartMenu}
-                  // sx={{
-                  //   display: { xs: "block", md: "none" },
-                  // }}
-                >
-                  {allCartProducts.products.map((product) => (
-                    <MenuItem
-                      key={product.id}
-                      onClick={handleCloseCartMenu}
-                      sx={{ backgroundColor: "var(--main1)" }}
-                    >
-                      <Typography
-                        component="a"
-                        onClick={() => handleNavigate(`/product/${product.id}`)}
-                        sx={{
-                          color: "var(--text)",
-                          width: "150px",
-                          textOverflow: "ellipsis !important",
-                        }}
+                {allCartProducts.products.length > 0 && (
+                  <Menu
+                    id="menu-cart"
+                    anchorEl={anchorElCart}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                    open={Boolean(anchorElCart)}
+                    onClose={handleCloseCartMenu}
+                  >
+                    {allCartProducts.products.map((product) => (
+                      <MenuItem
+                        key={product.id}
+                        className="scaling"
+                        onClick={handleCloseCartMenu}
+                        sx={{ backgroundColor: "var(--main1)" }}
                       >
-                        {product.title}
-                      </Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box>
+                        <Typography
+                          component="a"
+                          onClick={() =>
+                            handleNavigate(`/products/${product.id}`)
+                          }
+                          sx={{
+                            color: "var(--text)",
+                            width: { xs: "150px", md: "200px" },
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px",
+                          }}
+                        >
+                          <span
+                            style={{
+                              backgroundColor: "var(--main)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              width: "26px",
+                              height: "26px",
 
+                              borderRadius: "50%",
+                            }}
+                          >
+                            {product.count}
+                          </span>
+                          <span>
+                            {product.title.slice(0, 12)}
+                            {product.title.length >= 12 ? "..." : ""}
+                          </span>
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                )}
+              </Box>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt={user?.email || "user"} src="/react.svg" />
@@ -272,6 +293,7 @@ function ResponsiveAppBar() {
                 {settings.map((setting) => (
                   <MenuItem
                     key={setting}
+                    className="scaling"
                     onClick={handleCloseUserMenu}
                     sx={{
                       backgroundColor: "var(--main1)",

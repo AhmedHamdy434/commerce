@@ -12,7 +12,7 @@
   --main: #133926;
   --main1: #204d36;
   --background: #242424;
-  --background1: #242424;
+  --background1: #555;
   --background2: #242424;
   --text: rgba(255, 255, 255, 0.87);
   --text1: #cdc;
@@ -22,7 +22,6 @@
 
 body {
   margin: 0;
-  min-height: 100vh;
 }
 ul {
   padding-top: 0 !important;

@@ -7,7 +7,7 @@ import { RootState } from "../redux/store";
 import CartComponent from "../components/cartComponent/CartComponent";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { updatingFirebaseStore } from "../firebase/actions";
 import { useAuth } from "../providers/AuthProvider";
 import NoCartFound from "../components/NoCartFound";
@@ -16,7 +16,7 @@ import NoUserInCart from "../components/NoUserInCart";
 const CartPage = () => {
   const authContext = useAuth();
   const user = authContext?.user;
-  const [isMounted, setIsMounted] = useState(false);
+
   const allCartProducts: CartAccountType = useSelector(
     (state: RootState) => state.cart
   );
@@ -27,13 +27,11 @@ const CartPage = () => {
       if (user) await updatingFirebaseStore(user.uid, allCartProducts);
     };
     initialFunction();
-    setIsMounted(true);
   }, [allCartProducts, user]);
-  if (!isMounted) return;
   if (!user) return <NoUserInCart />;
   if (allCartProducts.totalCount <= 0) return <NoCartFound />;
   return (
-    <Container fixed>
+    <Container sx={{ paddingTop: "68px" }} fixed>
       <Typography variant="h4" component="h3" sx={{ marginBlock: "50px" }}>
         Products to buy
       </Typography>
@@ -42,7 +40,11 @@ const CartPage = () => {
       ))}
       <Button
         variant="contained"
-        sx={{ width: "100%", backgroundColor: "var(--main)" }}
+        sx={{
+          width: "100%",
+          backgroundColor: "var(--main)",
+          paddingBlock: "14px",
+        }}
         onClick={() => navigate("/checkout")}
       >
         Proceed to checkout ({allCartProducts.totalCount} items)

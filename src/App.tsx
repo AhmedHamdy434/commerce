@@ -5,9 +5,10 @@ import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import Products from "./pages/Products";
 import CartPage from "./pages/Cart";
-import CheckOut from "./pages/CheckOut";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import ProductPage from "./pages/Product";
+import CheckoutPage from "./pages/CheckOut";
 
 function App() {
   return (
@@ -16,8 +17,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<ProductPage />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route path="/checkout" element={<CheckOut />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
       </Routes>

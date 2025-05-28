@@ -26,6 +26,7 @@ const Landing = () => {
         minHeight: "calc(100vh - 68px)",
         overflow: "hidden",
         position: "relative",
+        paddingTop: "68px",
       }}
     >
       <img

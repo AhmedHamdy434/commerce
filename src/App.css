@@ -32,7 +32,23 @@
   transform: translateY(0);
 }
 .price {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
   color: var(--main);
+}
+.scaling {
+  &:hover {
+    background-color: var(--main) !important;
+    opacity: 0.8;
+  }
+}
+
+.checkout-form {
+  label,
+  input {
+    color: var(--text);
+  }
+  input:focus {
+    outline: none !important;
+  }
 }
