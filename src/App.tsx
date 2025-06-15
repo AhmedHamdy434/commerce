@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import "./App.css";
 import NavBar from "./layouts/NavBar";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import Products from "./pages/Products";
 import CartPage from "./pages/Cart";
@@ -15,7 +15,7 @@ function App() {
     <Box sx={{ minHeight: "2000px" }}>
       <NavBar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Products />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductPage />} />
         <Route path="/cart" element={<CartPage />} />

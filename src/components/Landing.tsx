@@ -1,5 +1,5 @@
-import landing from "../assets/landing.jpg";
-import Hero from "../assets/hero.png";
+import landing from "../assets/landing.png";
+// import Hero from "../assets/hero.png";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -29,13 +29,8 @@ const Landing = () => {
         paddingTop: "68px",
       }}
     >
-      <img
-        className="landing-image"
-        src={landing}
-        alt="landing image"
-        loading="lazy"
-      />
-      <div className="overlay"></div>
+      {/* <img className="landing-image" src={landing} alt="landing image" /> */}
+      {/* <div className="overlay"></div> */}
       <Container fixed sx={{ height: "100%", maxHeight: "1500px" }}>
         <Box
           sx={{
@@ -53,12 +48,14 @@ const Landing = () => {
           }}
         >
           <Box sx={{ gridArea: "pic" }} className="hero-image">
-            <img src={Hero} alt="hero-image" loading="lazy" />
+            <img src={landing} alt="hero-image" />
           </Box>
           <Box
             sx={{
               gridArea: "heading",
               padding: "20px",
+              // width: "100%",
+              // maxWidth: "700px",
             }}
           >
             <Typography
