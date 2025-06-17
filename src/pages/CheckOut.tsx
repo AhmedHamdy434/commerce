@@ -62,8 +62,8 @@ const CheckoutForm: React.FC = () => {
         padding: 4,
         maxWidth: 500,
         margin: "0 auto",
-        marginTop: "100px ",
-
+        marginTop: "150px ",
+        marginBottom: "100px",
         backgroundColor: "var(--background1)",
         color: "var(--text)",
       }}

@@ -31,7 +31,7 @@ const CartPage = () => {
   if (!user) return <NoUserInCart />;
   if (allCartProducts.totalCount <= 0) return <NoCartFound />;
   return (
-    <Container sx={{ paddingTop: "68px" }} fixed>
+    <Container sx={{ paddingBlock: "68px" }} fixed>
       <Typography variant="h4" component="h3" sx={{ marginBlock: "50px" }}>
         Products to buy
       </Typography>
