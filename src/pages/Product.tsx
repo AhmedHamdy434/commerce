@@ -75,7 +75,6 @@ const ProductPage = () => {
       </Box>
       <Typography
         variant="subtitle1"
-        component="p"
         sx={{
           marginTop: { md: "40px" },
           marginBottom: "40px",
